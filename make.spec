@@ -4,15 +4,16 @@
 #
 Name     : make
 Version  : 4.1
-Release  : 14
+Release  : 15
 URL      : http://mirrors.kernel.org/gnu/make/make-4.1.tar.gz
 Source0  : http://mirrors.kernel.org/gnu/make/make-4.1.tar.gz
 Summary  : No detailed summary available
 Group    : Development/Tools
-License  : GPL-3.0+ GPL-3.0 GFDL-1.3 LGPL-2.0 GPL-2.0
+License  : GFDL-1.3 GPL-2.0 GPL-3.0 GPL-3.0+ LGPL-2.0
 Requires: make-bin
 Requires: make-doc
 Requires: make-locales
+BuildRequires : guile
 Patch1: 292da6f6867b75a5af7ddbb639a1feae022f438f.patch
 Patch2: skip-tests-features-archive.patch
 
@@ -33,6 +34,7 @@ bin components for the make package.
 Summary: dev components for the make package.
 Group: Development
 Requires: make-bin
+Provides: make-devel
 
 %description dev
 dev components for the make package.
@@ -61,9 +63,12 @@ locales components for the make package.
 
 %build
 %configure --disable-static
-make V=1 %{?_smp_mflags}
+make V=1  %{?_smp_mflags}
 
 %check
+export http_proxy=http://127.0.0.1:9/
+export https_proxy=http://127.0.0.1:9/
+export no_proxy=localhost
 make VERBOSE=1 V=1 %{?_smp_mflags} check
 
 %install
