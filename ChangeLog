@@ -1,3 +1,56 @@
+2016-06-10  Paul Smith  <psmith@gnu.org>
+
+	GNU Make release 4.2.1.
+
+2016-06-06  Paul Smith  <psmith@gnu.org>
+
+	* maintMakefile: TP recommends rsync for retrieving PO files.
+
+2016-05-31  Jeremy Devenport  <jeremy.devenport@gmail.com>  (tiny change)
+
+	* main.c (main): [SV 48009] Reset stack limit for make re-exec.
+
+2016-05-31  Paul Smith  <psmith@gnu.org>
+
+	[SV 47995] Ensure forced double-colon rules work with -j.
+	The fix for SV 44742 had a side-effect that some double-colon targets
+	were skipped.  This happens because the "considered" facility assumed
+	that all targets would be visited on each walk through the dependency
+	graph: we used a bit for considered and toggled it on each pass; if
+	we didn't walk the entire graph on every pass the bit would get out
+	of sync.  The new behavior after SV 44742 might return early without
+	walking the entire graph.  To fix this I changed the considered value
+	to an integer which is monotonically increasing: it is then never
+	possible to incorrectly determine that a previous pass through the
+	graph already considered the current target.
+
+	* filedef.h (struct file): make CONSIDERED an unsigned int.
+	* main.c (main): No longer need to reset CONSIDERED.
+	* remake.c (update_goal_chain): increment CONSIDERED rather than
+	inverting it between 0<->1.
+	(update_file_1): Reset CONSIDERED to 0 so it's re-considered.
+	(check_dep): Ditto.
+	* tests/scripts/features/double_colon: Add a regression test.
+
+2016-05-31  Paul Smith  <psmith@gnu.org>
+
+	* DELETE_ON_ERROR: [SV 48061] Use "exit 1" for portability.
+	Reported by Joel Fredrikson <Joel.Fredrikson@it.uu.se>
+
+	* w32/pathstuff.c: [SV 47996] Use ISBLANK() not isblank().
+
+2016-05-28  Eli Zaretskii  <eliz@gnu.org>
+
+	Fix printing time stamps on MS-Windows
+	* dir.c (print_dir_data_base) [WINDOWS32]: Use %I64u format for
+	printing unsigned 64-bit data types, as %ull is not universally
+	supported.
+
+2016-05-27  Luke Allardyce  <lukeallardyce@gmail.com>  (tiny change)
+
+	[SV 48037] Fix MinGW build with Posix configury tools
+	* w32/Makefile.am (libw32_a_CPPFLAGS): Add -I$(srcdir)/glob.
+
 2016-05-22  Paul Smith  <psmith@gnu.org>
 
 	GNU Make release 4.2.
