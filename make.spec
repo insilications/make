@@ -4,7 +4,7 @@
 #
 Name     : make
 Version  : 4.2.1
-Release  : 21
+Release  : 22
 URL      : http://mirrors.kernel.org/gnu/make/make-4.2.1.tar.gz
 Source0  : http://mirrors.kernel.org/gnu/make/make-4.2.1.tar.gz
 Summary  : No detailed summary available
