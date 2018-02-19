@@ -2,8 +2,8 @@ Configure miss: whether system uses MSDOS-style paths
 Configure miss: whether bsd_signal is declared
 Configure miss: strcmpi
 Configure miss: strncmpi
-Configure miss: GUILE
-Configure miss: GUILE
+Configure miss: guile-2.0
+Configure miss: guile-1.8
 Configure miss: kstat_open in -lkstat
 Configure miss: whether getloadavg requires setgid
 Configure miss: whether __sys_siglist is declared

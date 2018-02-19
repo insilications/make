@@ -1,2 +1,3 @@
 skip-tests-features-archive.patch
 0002-Fix_tests.patch
+configure.ac-Support-GLIBC-glob-interface-version-2.patch
