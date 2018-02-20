@@ -6,7 +6,7 @@
 #
 Name     : make
 Version  : 4.2.1
-Release  : 28
+Release  : 29
 URL      : http://mirrors.kernel.org/gnu/make/make-4.2.1.tar.gz
 Source0  : http://mirrors.kernel.org/gnu/make/make-4.2.1.tar.gz
 Source99 : http://mirrors.kernel.org/gnu/make/make-4.2.1.tar.gz.sig
@@ -26,7 +26,8 @@ BuildRequires : m4
 BuildRequires : pkg-config-dev
 Patch1: skip-tests-features-archive.patch
 Patch2: 0002-Fix_tests.patch
-Patch3: configure.ac-Support-GLIBC-glob-interface-version-2.patch
+Patch3: glob-Do-not-assume-glibc-glob-internals.patch
+Patch4: configure.ac-Support-GLIBC-glob-interface-version-2.patch
 
 %description
 This directory contains the 4.2.1 release of GNU Make.
@@ -72,13 +73,14 @@ locales components for the make package.
 %patch1 -p1
 %patch2 -p1
 %patch3 -p1
+%patch4 -p1
 
 %build
 export http_proxy=http://127.0.0.1:9/
 export https_proxy=http://127.0.0.1:9/
 export no_proxy=localhost,127.0.0.1,0.0.0.0
 export LANG=C
-export SOURCE_DATE_EPOCH=1519084398
+export SOURCE_DATE_EPOCH=1519143165
 %reconfigure --disable-static
 make  %{?_smp_mflags}
 
@@ -87,10 +89,10 @@ export LANG=C
 export http_proxy=http://127.0.0.1:9/
 export https_proxy=http://127.0.0.1:9/
 export no_proxy=localhost,127.0.0.1,0.0.0.0
-make VERBOSE=1 V=1 %{?_smp_mflags} check || :
+make VERBOSE=1 V=1 %{?_smp_mflags} check
 
 %install
-export SOURCE_DATE_EPOCH=1519084398
+export SOURCE_DATE_EPOCH=1519143165
 rm -rf %{buildroot}
 %make_install
 %find_lang make
