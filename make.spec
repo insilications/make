@@ -6,17 +6,18 @@
 #
 Name     : make
 Version  : 4.2.1
-Release  : 33
+Release  : 34
 URL      : http://mirrors.kernel.org/gnu/make/make-4.2.1.tar.gz
 Source0  : http://mirrors.kernel.org/gnu/make/make-4.2.1.tar.gz
 Source99 : http://mirrors.kernel.org/gnu/make/make-4.2.1.tar.gz.sig
 Summary  : No detailed summary available
 Group    : Development/Tools
 License  : GPL-3.0 GPL-3.0+ LGPL-2.0
-Requires: make-bin
-Requires: make-license
-Requires: make-locales
-Requires: make-man
+Requires: make-bin = %{version}-%{release}
+Requires: make-license = %{version}-%{release}
+Requires: make-locales = %{version}-%{release}
+Requires: make-man = %{version}-%{release}
+Requires: make-doc
 BuildRequires : automake
 BuildRequires : automake-dev
 BuildRequires : gettext-bin
@@ -38,8 +39,8 @@ In addition, there have been bugs fixed.
 %package bin
 Summary: bin components for the make package.
 Group: Binaries
-Requires: make-license
-Requires: make-man
+Requires: make-license = %{version}-%{release}
+Requires: make-man = %{version}-%{release}
 
 %description bin
 bin components for the make package.
@@ -48,8 +49,8 @@ bin components for the make package.
 %package dev
 Summary: dev components for the make package.
 Group: Development
-Requires: make-bin
-Provides: make-devel
+Requires: make-bin = %{version}-%{release}
+Provides: make-devel = %{version}-%{release}
 
 %description dev
 dev components for the make package.
@@ -58,7 +59,7 @@ dev components for the make package.
 %package doc
 Summary: doc components for the make package.
 Group: Documentation
-Requires: make-man
+Requires: make-man = %{version}-%{release}
 
 %description doc
 doc components for the make package.
@@ -100,7 +101,7 @@ export http_proxy=http://127.0.0.1:9/
 export https_proxy=http://127.0.0.1:9/
 export no_proxy=localhost,127.0.0.1,0.0.0.0
 export LANG=C
-export SOURCE_DATE_EPOCH=1536119725
+export SOURCE_DATE_EPOCH=1541442225
 %reconfigure --disable-static
 make  %{?_smp_mflags}
 
@@ -112,12 +113,12 @@ export no_proxy=localhost,127.0.0.1,0.0.0.0
 make VERBOSE=1 V=1 %{?_smp_mflags} check
 
 %install
-export SOURCE_DATE_EPOCH=1536119725
+export SOURCE_DATE_EPOCH=1541442225
 rm -rf %{buildroot}
-mkdir -p %{buildroot}/usr/share/doc/make
-cp COPYING %{buildroot}/usr/share/doc/make/COPYING
-cp glob/COPYING.LIB %{buildroot}/usr/share/doc/make/glob_COPYING.LIB
-cp tests/COPYING %{buildroot}/usr/share/doc/make/tests_COPYING
+mkdir -p %{buildroot}/usr/share/package-licenses/make
+cp COPYING %{buildroot}/usr/share/package-licenses/make/COPYING
+cp glob/COPYING.LIB %{buildroot}/usr/share/package-licenses/make/glob_COPYING.LIB
+cp tests/COPYING %{buildroot}/usr/share/package-licenses/make/tests_COPYING
 %make_install
 %find_lang make
 ## install_append content
@@ -134,22 +135,20 @@ ln -s make %{buildroot}/usr/bin/gmake
 
 %files dev
 %defattr(-,root,root,-)
-/usr/include/gnumake.h
+/usr/include/*.h
 
 %files doc
 %defattr(0644,root,root,0755)
-%doc /usr/share/info/make.info
-%doc /usr/share/info/make.info-1
-%doc /usr/share/info/make.info-2
+%doc /usr/share/info/*
 
 %files license
-%defattr(-,root,root,-)
-/usr/share/doc/make/COPYING
-/usr/share/doc/make/glob_COPYING.LIB
-/usr/share/doc/make/tests_COPYING
+%defattr(0644,root,root,0755)
+/usr/share/package-licenses/make/COPYING
+/usr/share/package-licenses/make/glob_COPYING.LIB
+/usr/share/package-licenses/make/tests_COPYING
 
 %files man
-%defattr(-,root,root,-)
+%defattr(0644,root,root,0755)
 /usr/share/man/man1/make.1
 
 %files locales -f make.lang
