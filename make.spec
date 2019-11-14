@@ -6,14 +6,15 @@
 #
 Name     : make
 Version  : 4.2.1
-Release  : 35
+Release  : 36
 URL      : http://mirrors.kernel.org/gnu/make/make-4.2.1.tar.gz
 Source0  : http://mirrors.kernel.org/gnu/make/make-4.2.1.tar.gz
-Source99 : http://mirrors.kernel.org/gnu/make/make-4.2.1.tar.gz.sig
+Source1 : http://mirrors.kernel.org/gnu/make/make-4.2.1.tar.gz.sig
 Summary  : No detailed summary available
 Group    : Development/Tools
 License  : GPL-3.0 GPL-3.0+ LGPL-2.0
 Requires: make-bin = %{version}-%{release}
+Requires: make-info = %{version}-%{release}
 Requires: make-license = %{version}-%{release}
 Requires: make-locales = %{version}-%{release}
 Requires: make-man = %{version}-%{release}
@@ -40,7 +41,6 @@ In addition, there have been bugs fixed.
 Summary: bin components for the make package.
 Group: Binaries
 Requires: make-license = %{version}-%{release}
-Requires: make-man = %{version}-%{release}
 
 %description bin
 bin components for the make package.
@@ -51,18 +51,18 @@ Summary: dev components for the make package.
 Group: Development
 Requires: make-bin = %{version}-%{release}
 Provides: make-devel = %{version}-%{release}
+Requires: make = %{version}-%{release}
 
 %description dev
 dev components for the make package.
 
 
-%package doc
-Summary: doc components for the make package.
-Group: Documentation
-Requires: make-man = %{version}-%{release}
+%package info
+Summary: info components for the make package.
+Group: Default
 
-%description doc
-doc components for the make package.
+%description info
+info components for the make package.
 
 
 %package license
@@ -91,6 +91,7 @@ man components for the make package.
 
 %prep
 %setup -q -n make-4.2.1
+cd %{_builddir}/make-4.2.1
 %patch1 -p1
 %patch2 -p1
 %patch3 -p1
@@ -100,25 +101,33 @@ man components for the make package.
 export http_proxy=http://127.0.0.1:9/
 export https_proxy=http://127.0.0.1:9/
 export no_proxy=localhost,127.0.0.1,0.0.0.0
-export LANG=C
-export SOURCE_DATE_EPOCH=1541442225
+export LANG=C.UTF-8
+export SOURCE_DATE_EPOCH=1573773165
+export GCC_IGNORE_WERROR=1
+export AR=gcc-ar
+export RANLIB=gcc-ranlib
+export NM=gcc-nm
+export CFLAGS="$CFLAGS -O3 -ffat-lto-objects -flto=4 "
+export FCFLAGS="$CFLAGS -O3 -ffat-lto-objects -flto=4 "
+export FFLAGS="$CFLAGS -O3 -ffat-lto-objects -flto=4 "
+export CXXFLAGS="$CXXFLAGS -O3 -ffat-lto-objects -flto=4 "
 %reconfigure --disable-static
 make  %{?_smp_mflags}
 
 %check
-export LANG=C
+export LANG=C.UTF-8
 export http_proxy=http://127.0.0.1:9/
 export https_proxy=http://127.0.0.1:9/
 export no_proxy=localhost,127.0.0.1,0.0.0.0
 make VERBOSE=1 V=1 %{?_smp_mflags} check
 
 %install
-export SOURCE_DATE_EPOCH=1541442225
+export SOURCE_DATE_EPOCH=1573773165
 rm -rf %{buildroot}
 mkdir -p %{buildroot}/usr/share/package-licenses/make
-cp COPYING %{buildroot}/usr/share/package-licenses/make/COPYING
-cp glob/COPYING.LIB %{buildroot}/usr/share/package-licenses/make/glob_COPYING.LIB
-cp tests/COPYING %{buildroot}/usr/share/package-licenses/make/tests_COPYING
+cp %{_builddir}/make-4.2.1/COPYING %{buildroot}/usr/share/package-licenses/make/8624bcdae55baeef00cd11d5dfcfa60f68710a02
+cp %{_builddir}/make-4.2.1/glob/COPYING.LIB %{buildroot}/usr/share/package-licenses/make/ec2350cf4fe9c4f97c3ee5c9046d0396672c365a
+cp %{_builddir}/make-4.2.1/tests/COPYING %{buildroot}/usr/share/package-licenses/make/8624bcdae55baeef00cd11d5dfcfa60f68710a02
 %make_install
 %find_lang make
 ## install_append content
@@ -135,17 +144,18 @@ ln -s make %{buildroot}/usr/bin/gmake
 
 %files dev
 %defattr(-,root,root,-)
-/usr/include/*.h
+/usr/include/gnumake.h
 
-%files doc
+%files info
 %defattr(0644,root,root,0755)
-%doc /usr/share/info/*
+/usr/share/info/make.info
+/usr/share/info/make.info-1
+/usr/share/info/make.info-2
 
 %files license
 %defattr(0644,root,root,0755)
-/usr/share/package-licenses/make/COPYING
-/usr/share/package-licenses/make/glob_COPYING.LIB
-/usr/share/package-licenses/make/tests_COPYING
+/usr/share/package-licenses/make/8624bcdae55baeef00cd11d5dfcfa60f68710a02
+/usr/share/package-licenses/make/ec2350cf4fe9c4f97c3ee5c9046d0396672c365a
 
 %files man
 %defattr(0644,root,root,0755)
