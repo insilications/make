@@ -6,7 +6,7 @@
 #
 Name     : make
 Version  : 4.2.1
-Release  : 36
+Release  : 37
 URL      : http://mirrors.kernel.org/gnu/make/make-4.2.1.tar.gz
 Source0  : http://mirrors.kernel.org/gnu/make/make-4.2.1.tar.gz
 Source1 : http://mirrors.kernel.org/gnu/make/make-4.2.1.tar.gz.sig
@@ -18,7 +18,6 @@ Requires: make-info = %{version}-%{release}
 Requires: make-license = %{version}-%{release}
 Requires: make-locales = %{version}-%{release}
 Requires: make-man = %{version}-%{release}
-Requires: make-doc
 BuildRequires : automake
 BuildRequires : automake-dev
 BuildRequires : gettext-bin
@@ -102,7 +101,7 @@ export http_proxy=http://127.0.0.1:9/
 export https_proxy=http://127.0.0.1:9/
 export no_proxy=localhost,127.0.0.1,0.0.0.0
 export LANG=C.UTF-8
-export SOURCE_DATE_EPOCH=1573773165
+export SOURCE_DATE_EPOCH=1573773996
 export GCC_IGNORE_WERROR=1
 export AR=gcc-ar
 export RANLIB=gcc-ranlib
@@ -122,7 +121,7 @@ export no_proxy=localhost,127.0.0.1,0.0.0.0
 make VERBOSE=1 V=1 %{?_smp_mflags} check
 
 %install
-export SOURCE_DATE_EPOCH=1573773165
+export SOURCE_DATE_EPOCH=1573773996
 rm -rf %{buildroot}
 mkdir -p %{buildroot}/usr/share/package-licenses/make
 cp %{_builddir}/make-4.2.1/COPYING %{buildroot}/usr/share/package-licenses/make/8624bcdae55baeef00cd11d5dfcfa60f68710a02
