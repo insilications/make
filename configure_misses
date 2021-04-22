@@ -1,8 +1,8 @@
-Configure miss: whether system uses MSDOS-style paths
-Configure miss: whether bsd_signal is declared
+Configure miss: GNU Guile
+Configure miss: if malloc debugging is wanted
 Configure miss: strcmpi
 Configure miss: strncmpi
-Configure miss: GNU Guile
-Configure miss: whether __sys_siglist is declared
 Configure miss: union wait
-Configure miss: if malloc debugging is wanted
+Configure miss: whether __sys_siglist is declared
+Configure miss: whether bsd_signal is declared
+Configure miss: whether system uses MSDOS-style paths

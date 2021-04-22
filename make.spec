@@ -6,7 +6,7 @@
 #
 Name     : make
 Version  : 4.3
-Release  : 40
+Release  : 41
 URL      : http://mirrors.kernel.org/gnu/make/make-4.3.tar.gz
 Source0  : http://mirrors.kernel.org/gnu/make/make-4.3.tar.gz
 Source1  : http://mirrors.kernel.org/gnu/make/make-4.3.tar.gz.sig
@@ -41,7 +41,6 @@ Summary: dev components for the make package.
 Group: Development
 Requires: make-bin = %{version}-%{release}
 Provides: make-devel = %{version}-%{release}
-Requires: make = %{version}-%{release}
 Requires: make = %{version}-%{release}
 
 %description dev
@@ -91,15 +90,14 @@ export http_proxy=http://127.0.0.1:9/
 export https_proxy=http://127.0.0.1:9/
 export no_proxy=localhost,127.0.0.1,0.0.0.0
 export LANG=C.UTF-8
-export SOURCE_DATE_EPOCH=1579893570
-# -Werror is for werrorists
+export SOURCE_DATE_EPOCH=1619061555
 export GCC_IGNORE_WERROR=1
 export AR=gcc-ar
 export RANLIB=gcc-ranlib
 export NM=gcc-nm
 export CFLAGS="$CFLAGS -O3 -ffat-lto-objects -flto=4 "
-export FCFLAGS="$CFLAGS -O3 -ffat-lto-objects -flto=4 "
-export FFLAGS="$CFLAGS -O3 -ffat-lto-objects -flto=4 "
+export FCFLAGS="$FFLAGS -O3 -ffat-lto-objects -flto=4 "
+export FFLAGS="$FFLAGS -O3 -ffat-lto-objects -flto=4 "
 export CXXFLAGS="$CXXFLAGS -O3 -ffat-lto-objects -flto=4 "
 %configure --disable-static
 make  %{?_smp_mflags}
@@ -109,10 +107,10 @@ export LANG=C.UTF-8
 export http_proxy=http://127.0.0.1:9/
 export https_proxy=http://127.0.0.1:9/
 export no_proxy=localhost,127.0.0.1,0.0.0.0
-make VERBOSE=1 V=1 %{?_smp_mflags} check
+make %{?_smp_mflags} check
 
 %install
-export SOURCE_DATE_EPOCH=1579893570
+export SOURCE_DATE_EPOCH=1619061555
 rm -rf %{buildroot}
 mkdir -p %{buildroot}/usr/share/package-licenses/make
 cp %{_builddir}/make-4.3/COPYING %{buildroot}/usr/share/package-licenses/make/8624bcdae55baeef00cd11d5dfcfa60f68710a02
