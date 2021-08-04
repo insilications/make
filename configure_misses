@@ -4,5 +4,7 @@ Configure miss: strcmpi
 Configure miss: strncmpi
 Configure miss: union wait
 Configure miss: whether __sys_siglist is declared
+Configure miss: whether _sys_siglist is declared
 Configure miss: whether bsd_signal is declared
+Configure miss: whether sys_siglist is declared
 Configure miss: whether system uses MSDOS-style paths
