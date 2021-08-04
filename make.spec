@@ -7,8 +7,8 @@
 Name     : make
 Version  : 4.3
 Release  : 41
-URL      : http://mirrors.kernel.org/gnu/make/make-4.3.tar.gz
-Source0  : http://mirrors.kernel.org/gnu/make/make-4.3.tar.gz
+URL      : https://mirrors.kernel.org/gnu/make/make-4.3.tar.gz
+Source0  : https://mirrors.kernel.org/gnu/make/make-4.3.tar.gz
 Source1  : http://mirrors.kernel.org/gnu/make/make-4.3.tar.gz.sig
 Summary  : No detailed summary available
 Group    : Development/Tools
