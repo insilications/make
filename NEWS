@@ -1,6 +1,6 @@
 GNU make NEWS                                               -*-indented-text-*-
   History of user-visible changes.
-  19 January 2020
+  20 January 2020
 
 See the end of this file for copyrights and conditions.
 
@@ -8,6 +8,93 @@ All user-visible changes are more fully described in the GNU make manual,
 which is contained in this distribution as the file doc/make.texi.
 See the README file and the GNU make manual for instructions for
 reporting bugs.
+
+Version 4.3.90 (20 Jan 2020)
+
+A complete list of bugs fixed in this version is available here:
+
+https://sv.gnu.org/bugs/index.php?group=make&report_id=111&fix_release_id=109&set=custom
+
+* WARNING: Backward-incompatibility!
+  Previously if --no-print-directory was seen anywhere in the environment or
+  command line it would take precedence over any --print-directory.  Now, the
+  last setting of directory printing options seen will be used, so a command
+  line such as "--no-print-directory -w" _will_ show directory entry/exits.
+
+* WARNING: Backward-incompatibility!
+  Previously the order in which makefiles were remade was not explicitly
+  stated, but it was (roughly) the inverse of the order in which they were
+  processed by make.  In this release, the order in which makefiles are
+  rebuilt is the same order in which make processed them, and this is defined
+  to be true in the GNU make manual.
+
+* WARNING: Backward-incompatibility!
+  Previously only simple (one-letter) options were added to the MAKEFLAGS
+  variable that was visible while parsing makefiles.  Now, all options
+  are available in MAKEFLAGS.
+
+* WARNING: New build requirement
+  GNU make utilizes facilities from GNU Gnulib: Gnulib requires certain C99
+  features in the C compiler and so these features are required by GNU make:
+  https://www.gnu.org/software/gnulib/manual/html_node/C99-features-assumed.html
+  The configure script should verify the compiler has these features.
+
+* New feature: The .NOTINTERMEDIATE special target
+  .NOTINTERMEDIATE Disables intermediate behavior for specific files, for all
+  files built using a pattern, or for the entire makefile.
+  Implementation provided by Dmitry Goncharov <dgoncharov@users.sf.net>
+
+* New feature: The $(let ...) function
+  This function allows user-defined functions to define a set of local
+  variables: values can be assigned to these variables from within the
+  user-defined function and they will not impact global variable assignments.
+  Implementation provided by Jouke Witteveen <j.witteveen@gmail.com>
+
+* New feature: The $(intcmp ...) function
+  This function allows conditional evaluation controlled by a numerical
+  comparison.
+  Implementation provided by Jouke Witteveen <j.witteveen@gmail.com>
+
+* If the MAKEFLAGS variable is modified in a makefile, it will be re-parsed
+  immediately rather than after all makefiles have been read.  Note that
+  although all options are parsed immediately, some special effects won't
+  appear until after all makefiles are read.
+
+* The -I option accepts an argument "-" (e.g., "-I-") which means "reset the
+  list of search directories to empty".  Among other things this can be used
+  to prevent GNU make from searching in its default list of directories.
+
+* New debug option "print" will show the recipe to be run, even when silent
+  mode is set, and new debug option "why" will show why a target is rebuilt
+  (which prerequisites caused the target to be considered out of date).
+  Implementation provided by David Boyce <David.S.Boyce@gmail.com>
+
+* The existing --trace option is made equivalent to --debug=print,why
+
+* Target-specific variables can now be marked "unexport".
+
+* Exporting / unexporting target-specific variables is handled correctly, so
+  that the attribute of the most specific variable setting is used.
+
+* Special targets like .POSIX are detected upon definition, ensuring that any
+  change in behavior takes effect immediately, before the next line is parsed.
+
+* A long-standing issue with the directory cache has been resolved: changes
+  made as a side-effect of some other target's recipe are now noticed as
+  expected.
+
+* GNU make has sometimes chosen unexpected, and sub-optimal, chains of
+  implicit rules due to the definition of "ought to exist" in the implicit
+  rule search algorithm, which considered any prerequisite mentioned in the
+  makefile as "ought to exist".  This algorithm has been modified to prefer
+  prerequisites mentioned explicitly in the target being built and only if
+  that results in no matching rule, will GNU make consider prerequisites
+  mentioned in other targets as "ought to exist".
+  Implementation provided by Dmitry Goncharov <dgoncharov@users.sf.net>
+
+* GNU Make can now be built for MS-Windows using the Tiny C tcc compiler.
+  Port provided by Christian Jullien <eligis@orange.fr>
+
 
 Version 4.3 (19 Jan 2020)
 
@@ -34,6 +121,13 @@ https://sv.gnu.org/bugs/index.php?group=make&report_id=111&fix_release_id=108&se
   starting with a space.  Now the initial space is only added if the variable
   already contains some value.  Similarly, appending an empty string does not
   add a trailing space.
+
+* WARNING: Backward-incompatibility!
+  Previously using the .SILENT pseudo-target in a makefile would force all
+  sub-makes to be invoked with the '-s' option, effectively making all
+  sub-makes silent as well.  In this release .SILENT only affects the current
+  invocation of make.  A side-effect of this is that .SILENT will no longer
+  enable the --no-print-directory option, which using -s will do.
 
 * NOTE: Deprecated behavior.
   Contrary to the documentation, suffix rules with prerequisites are being

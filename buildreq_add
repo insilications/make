@@ -1,5 +1,22 @@
 #
-# This file contains extra pkgconfig build requirements that don't get picked up but are 
+# This file contains extra pkgconfig build requirements that don't get picked up but are
 # desirable. One name per line, no whitespace.
 #
+autoconf
+automake
+emacs
+glibc-locale
+gmp-dev
 guile
+guile-dev
+libffi
+libffi-dev
+libffi-staticdev
+libunistring-dev
+ncurses-dev
+openssl-dev
+openssl-staticdev
+pkg-config
+readline-dev
+sed
+texinfo
